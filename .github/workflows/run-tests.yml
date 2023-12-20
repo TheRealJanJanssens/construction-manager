@@ -58,6 +58,12 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
+      - name: Setup Enviroment
+        run: |
+          php artisan key:generate
+          php artisan migrate
+          php db:seed
+
       - name: Execute tests
         env:
           DB_CONNECTION: mysql
