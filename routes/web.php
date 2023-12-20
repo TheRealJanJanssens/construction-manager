@@ -16,3 +16,25 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+/*
+
+Spatie Roles and permissions manager
+
+$user = User::find(1);
+$user->assignRole('admin');
+
+if ($user->hasRole('admin')) {
+    // do something
+}
+
+if ($user->can('view users')) {
+    // do something
+}
+
+Route::middleware('role:admin')->get('/users', function () {
+    // ...
+});
+
+*/
