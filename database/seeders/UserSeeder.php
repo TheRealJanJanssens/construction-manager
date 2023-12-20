@@ -15,7 +15,8 @@ class UserSeeder extends Seeder
         \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
-            'name' => 'Jan Janssens',
+            'first_name' => 'Jan',
+            'last_name' => 'Janssens',
             'email' => 'hello@janjanssens',
         ]);
     }
