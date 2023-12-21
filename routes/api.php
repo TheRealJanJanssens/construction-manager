@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\UnitController;
 use App\Http\Controllers\API\V1\UserController;
 
 /*
@@ -25,4 +26,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\API\V1'], f
 //Protected V1 Routes
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\API\V1', 'middleware' => 'auth:sanctum'], function() {
     Route::apiResource('users', UserController::class);
+    Route::apiResource('units', UnitController::class);
 });
