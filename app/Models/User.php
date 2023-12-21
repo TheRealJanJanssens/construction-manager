@@ -24,7 +24,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -65,5 +66,9 @@ class User extends Authenticatable
             return $this->attributes['password'] = Hash::make($value);
         }
         return $this->attributes['password'] = $value;
+    }
+
+    public function meta(){
+        return $this->hasOne(UserMeta::class);
     }
 }

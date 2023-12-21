@@ -11,9 +11,7 @@ use App\Http\Resources\V1\UserCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\StoreUserRequest;
-use App\Http\Requests\API\V1\UpdateStatusRequest;
 use App\Http\Requests\API\V1\UpdateUserRequest;
-use App\Http\Resources\V1\StatusResource;
 
 /**
  * @group Users
@@ -27,7 +25,7 @@ class UserController extends Controller
     {
         $filter = new UserQuery();
         $queryItems = $filter->transform($request);
-        return new UserCollection(User::where($queryItems)->with(['meta', 'company'])->get());
+        return new UserCollection(User::where($queryItems)->with(['meta'])->get());
     }
 
     /**
@@ -37,7 +35,6 @@ class UserController extends Controller
      * @bodyParam firstName string required Example: Jan
      * @bodyParam lastName string required Example: Janssens
      * @bodyParam email string required Example: jan.janssens@digiti.be
-     * @bodyParam role string required Select one of following roles LEAD, PROSPECT, MATCHMAKER, EXPERT Example: PROSPECT
      */
     public function store(StoreUserRequest $request): UserResource
     {
@@ -49,7 +46,7 @@ class UserController extends Controller
      */
     public function show(User $user): UserResource
     {
-        return new UserResource($user->loadMissing(['meta', 'company']));
+        return new UserResource($user->loadMissing(['meta']));
     }
 
     /**
@@ -57,7 +54,6 @@ class UserController extends Controller
      * @bodyParam firstName string required Example: Jan
      * @bodyParam lastName string required Example: Janssens
      * @bodyParam email string required Example: jan.janssens@digiti.be
-     * @bodyParam role string required Select one of following roles LEAD, PROSPECT, MATCHMAKER, EXPERT Example: PROSPECT
      */
     public function update(UpdateUserRequest $request, User $user): UserResource
     {

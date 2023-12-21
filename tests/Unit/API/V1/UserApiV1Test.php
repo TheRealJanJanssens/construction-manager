@@ -24,161 +24,73 @@ it('can fetch a list of users', function () {
     $response->assertStatus(200)->assertJsonStructure([
         'data' => [
             [
-                'id',
+                'uuid',
                 'firstName',
                 'lastName',
                 'email',
-                // 'role',
-                // 'status',
-                // 'meta',
-                // 'company'
+                'meta'
             ]
         ]
     ]);
 });
 
-
 it('can fetch a specific user', function () {
-    // $company = Company::create([
-    //     'name' => 'Test company',
-    //     'address' => 'Kanaallaan 1b',
-    //     'city' => 'Zandhoven',
-    //     'zip' => '2240',
-    //     'country' => 'Belgium'
-    // ]);
-
     $user = User::create([
         'first_name' => 'Jan',
         'last_name' => 'Janssens',
         'email' => 'tester@digiti.be',
-        //'role' => Role::EXPERT->value,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
     ]);
 
-    // $user->meta()->create([
-    //     'job_title' => 'Test engineer'
-    // ]);
+    $user->meta()->create([
+        'job_title' => 'Test engineer'
+    ]);
 
-    // $user->company()->associate($company)->save();
-
-    $response = $this->get("/api/v1/users/".$user->id);
+    $response = $this->get("/api/v1/users/".$user->uuid);
 
     $response->assertStatus(200)
     ->assertJsonStructure([
         'data' => [
-            'id',
+            'uuid',
             'firstName',
             'lastName',
             'email',
-            //'role',
-            //'status',
-            //'meta',
-            //'company'
+            'meta'
         ]
     ])
     ->assertJson([
         'data' => [
-            'id' => $user->id,
+            'uuid' => $user->uuid,
             'firstName' => 'Jan',
             'lastName' => 'Janssens',
             'email' => 'tester@digiti.be',
-            // 'role' => Role::EXPERT->value,
-            // 'status' => Status::AVAILABLE->value,
-            // 'meta' => [
-            //     'jobTitle' => 'Test engineer'
-            // ],
-            // 'company' => [
-            //     'name' => 'Test company',
-            //     'address' => 'Kanaallaan 1b',
-            //     'city' => 'Zandhoven',
-            //     'zip' => '2240',
-            //     'country' => 'Belgium'
-            // ]
+            'meta' => [
+                'jobTitle' => 'Test engineer'
+            ]
         ]
     ]);
 });
-
-// it('can fetch filter a list of users by role', function () {
-//     $company = Company::create([
-//         'name' => 'Test company',
-//         'address' => 'Kanaallaan 1b',
-//         'city' => 'Zandhoven',
-//         'zip' => '2240',
-//         'country' => 'Belgium'
-//     ]);
-
-//     $user = User::create([
-//         'first_name' => 'Jan',
-//         'last_name' => 'Janssens',
-//         'email' => 'tester@digiti.be',
-//         'role' => Role::EXPERT->value,
-//         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
-//     ]);
-
-//     User::create([
-//         'first_name' => 'Peter',
-//         'last_name' => 'Peeters',
-//         'email' => 'peter@digiti.be',
-//         'role' => Role::MATCHMAKER->value,
-//         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
-//     ]);
-
-//     $user->meta()->create([
-//         'job_title' => 'Test engineer'
-//     ]);
-
-//     $user->company()->associate($company)->save();
-
-//     $response = $this->get("/api/v1/users?role[eq]=".Role::EXPERT->value);
-//     $response->assertStatus(200)
-//     ->assertJson([
-//         'data' => [
-//             [
-//                 'id' => $user->id,
-//                 'firstName' => 'Jan',
-//                 'lastName' => 'Janssens',
-//                 'email' => 'tester@digiti.be',
-//                 //'role' => Role::EXPERT->value,
-//                 //'status' => Status::AVAILABLE->value,
-//                 'meta' => [
-//                     'jobTitle' => 'Test engineer'
-//                 ],
-//                 'company' => [
-//                     'name' => 'Test company',
-//                     'address' => 'Kanaallaan 1b',
-//                     'city' => 'Zandhoven',
-//                     'zip' => '2240',
-//                     'country' => 'Belgium'
-//                 ]
-//             ]
-//         ]
-//     ]);
-// });
 
 it('can store a new user', function () {
     $data = [
         'firstName' => 'Jan',
         'lastName' => 'Janssens',
-        'email' => 'jan.janssens@digiti.be',
-        //'role' => Role::EXPERT->value
+        'email' => 'jan.janssens@digiti.be'
     ];
 
     $response = $this->postJson('/api/v1/users', $data);
     $response->assertStatus(201);
-    //$this->assertEquals('users', $data);
 });
 
 it('can\'t create a user with invalid data', function () {
     $data = [
         'firstName' => 'Jan',
         'lastName' => 'Janssens',
-        'email' => 'notarealemail',
-        //'role' => Role::EXPERT->value,
+        'email' => 'notarealemail'
     ];
 
     $response = $this->postJson('/api/v1/users', $data);
     $response->assertStatus(422)->assertJson(['message' => 'The email field must be a valid email address.']);
-    //$this->not()->assertDatabaseHas('users', $data);
 });
 
 
@@ -188,25 +100,22 @@ it('can update a user with a put request', function () {
         'first_name' => 'Jan',
         'last_name' => 'Janssens',
         'email' => 'tester@digiti.be',
-        //'role' => Role::EXPERT->value,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
     ]);
 
     $data = [
         'firstName' => 'Peter',
         'lastName' => 'Janssens',
-        'email' => 'jan.janssens@digiti.be',
-        //'role' => Role::EXPERT->value
+        'email' => 'jan.janssens@digiti.be'
     ];
 
-    $response = $this->putJson('/api/v1/users/'.$user->id, $data);
+    $response = $this->putJson('/api/v1/users/'.$user->uuid, $data);
     $response->assertStatus(200)->assertJson([
         'data' => [
-            'id' => $user->id,
+            'uuid' => $user->uuid,
             'firstName' => 'Peter',
             'lastName' => 'Janssens',
-            'email' => 'jan.janssens@digiti.be',
-            //'role' => Role::EXPERT->value
+            'email' => 'jan.janssens@digiti.be'
         ]
     ]);
 });
@@ -217,18 +126,16 @@ it('can\'t update a user with a put request when invalid data is given', functio
         'first_name' => 'Jan',
         'last_name' => 'Janssens',
         'email' => 'tester@digiti.be',
-        //'role' => Role::EXPERT->value,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
     ]);
 
     $data = [
         'firstName' => 'Peter',
         'lastName' => 'Janssens',
-        'email' => 'jan.janssensdigiti.be',
-        //'role' => Role::EXPERT->value
+        'email' => 'jan.janssensdigiti.be'
     ];
 
-    $response = $this->putJson('/api/v1/users/'.$user->id, $data);
+    $response = $this->putJson('/api/v1/users/'.$user->uuid, $data);
     $response->assertStatus(422)->assertJson([
         'message' => "The email field must be a valid email address.",
     ]);
@@ -240,7 +147,6 @@ it('can update a user with a patch request', function () {
         'first_name' => 'Jan',
         'last_name' => 'Janssens',
         'email' => 'tester@digiti.be',
-       //'role' => Role::EXPERT->value,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
     ]);
 
@@ -249,14 +155,13 @@ it('can update a user with a patch request', function () {
         'email' => 'jan.janssens@digiti.be'
     ];
 
-    $response = $this->patchJson('/api/v1/users/'.$user->id, $data);
+    $response = $this->patchJson('/api/v1/users/'.$user->uuid, $data);
     $response->assertStatus(200)->assertJson([
         'data' => [
-            'id' => $user->id,
+            'uuid' => $user->uuid,
             'firstName' => 'Peter',
             'lastName' => 'Janssens',
-            'email' => 'jan.janssens@digiti.be',
-            //'role' => Role::EXPERT->value
+            'email' => 'jan.janssens@digiti.be'
         ]
     ]);
 });
@@ -267,16 +172,15 @@ it('can\'t update a user with a patch request when invalid data is given', funct
         'first_name' => 'Jan',
         'last_name' => 'Janssens',
         'email' => 'tester@digiti.be',
-        //'role' => Role::EXPERT->value,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
     ]);
 
     $data = [
-        'role' => 'TESTER',
+        'email' => 'testerdigitibe',
     ];
 
-    $response = $this->patchJson('/api/v1/users/'.$user->id, $data);
+    $response = $this->patchJson('/api/v1/users/'.$user->uuid, $data);
     $response->assertStatus(422)->assertJson([
-        'message' => "The selected role is invalid.",
+        'message' => "The email field must be a valid email address.",
     ]);
 });

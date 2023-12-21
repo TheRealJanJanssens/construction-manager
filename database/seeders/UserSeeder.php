@@ -12,12 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->hasMeta()->create();
 
-        \App\Models\User::factory()->create([
+        \App\Models\User::factory()->hasMeta()->password('password')->create([
             'first_name' => 'Jan',
             'last_name' => 'Janssens',
-            'email' => 'hello@janjanssens',
+            'email' => 'hello@janjanssens.be',
         ]);
     }
 }

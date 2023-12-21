@@ -15,14 +15,14 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'uuid' => $this->uuid,
             'firstName' => $this->first_name,
             'lastName' => $this->last_name,
             'email' => $this->email,
+            'meta' => new UserMetaResource($this->whenLoaded('meta')), //UserMetaResource::collection() for multiple results
+            // 'company' => new CompanyResource($this->whenLoaded('company'))
             // 'role' => $this->role,
             // 'status' => $this->status,
-            // 'meta' => new UserMetaResource($this->whenLoaded('meta')), //UserMetaResource::collection() for multiple results
-            // 'company' => new CompanyResource($this->whenLoaded('company'))
         ];
     }
 }
