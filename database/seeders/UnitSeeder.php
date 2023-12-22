@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\UnitGroup;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +16,21 @@ class UnitSeeder extends Seeder
     {
         //Units within a group
         for ($i = 1; $i <= 6; $i++) {
-            \App\Models\Unit::factory()->hasMeta()->belongsToGroup()->create();
+            $users = User::inRandomOrder()->take(2)->get();
+            $users->map(function($user){
+                return $user->uuid;
+            })->toArray();
+            \App\Models\Unit::factory()->hasMeta()->belongsToGroup()->create()->users()->attach($users);
             //->belongsToGroup($groups->random()->uuid)
         }
 
         //Units without a group
-        \App\Models\Unit::factory(8)->hasMeta()->create();
+        for ($i = 1; $i <= 8; $i++) {
+            $users = User::inRandomOrder()->take(2)->get();
+            $users->map(function($user){
+                return $user->uuid;
+            })->toArray();
+            \App\Models\Unit::factory()->hasMeta()->create()->users()->attach($users);
+        }
     }
 }

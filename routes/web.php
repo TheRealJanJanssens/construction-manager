@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //dd(Unit::first()->projects()->get());
+
     return view('welcome');
 });
 

@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             UnitGroupSeeder::class,
-            UnitSeeder::class
+            UnitSeeder::class,
+            ProjectSeeder::class
         ]);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UnitMeta extends Model
+class Project extends Model
 {
     use HasFactory, HasUuids, CreateUuid;
 
@@ -20,11 +20,10 @@ class UnitMeta extends Model
      */
     protected $fillable = [
         'unit_uuid',
-        'type',
-        'address',
-        'city',
-        'postal_code',
-        'extra'
+        'name',
+        'start_date',
+        'due_date',
+        'completed_date',
     ];
 
     public function unit(){

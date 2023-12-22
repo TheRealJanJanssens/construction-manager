@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UnitResource extends JsonResource
+class ProjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,11 @@ class UnitResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'uuid' => $this->uuid,
-            'groupUuid' => $this->group_uuid,
+            'unitUuid' => $this->unit_uuid,
             'name' => $this->name,
-            'meta' => new UnitMetaResource($this->whenLoaded('meta')),
+            'startDate' => $this->start_date,
+            'dueDate' => $this->due_date,
+            'completedDate' => $this->completed_date
         ];
     }
 }

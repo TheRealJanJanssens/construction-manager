@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unit_metas', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->uuid('unit_uuid');
-            $table->string('type')->nullable();
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('postal_code')->nullable();
-            $table->json('extra')->nullable();
+            $table->string('name');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('due_date')->nullable();
+            $table->dateTime('completed_date')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unit_metas');
+        Schema::dropIfExists('projects');
     }
 };

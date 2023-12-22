@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Project;
 use App\Models\User;
 use App\Models\Unit;
 use App\Models\UnitGroup;
@@ -23,7 +24,7 @@ it('can fetch a list of units', function () {
         'data' => [
             [
                 'uuid',
-                'group_uuid',
+                'groupUuid',
                 'name',
                 'meta'
             ]
@@ -51,7 +52,7 @@ it('can fetch a specific unit', function () {
     ->assertJsonStructure([
         'data' => [
             'uuid',
-            'group_uuid',
+            'groupUuid',
             'name',
             'meta'
         ]
@@ -59,7 +60,7 @@ it('can fetch a specific unit', function () {
     ->assertJson([
         'data' => [
             'uuid' => $unit->uuid,
-            'group_uuid' => $group->uuid,
+            'groupUuid' => $group->uuid,
             'name' => 'Appartement 1',
             'meta' => [
                 'address' => 'Kerkstraat 123'
@@ -174,5 +175,43 @@ it('can delete a given unit', function () {
     $response = $this->delete('/api/v1/units/'.$unit->uuid);
     $response->assertStatus(200)->assertJson([
         'message' => "Unit deleted successfully.",
+    ]);
+});
+
+it('can fetch all projects of a specific unit', function () {
+    $unit = Unit::create([
+        'name' => 'Appartement 1',
+    ]);
+
+    $unit->meta()->create([
+        'address' => 'Kerkstraat 123'
+    ]);
+
+    Project::create([
+        'unit_uuid' => $unit->uuid,
+        'name' => "Project name"
+    ]);
+
+    $response = $this->get("/api/v1/units/".$unit->uuid."/projects");
+
+    $response->assertStatus(200)
+    ->assertJsonStructure([
+        'data' => [
+            [
+                'unitUuid',
+                'name',
+                'startDate',
+                'dueDate',
+                'completedDate'
+            ]
+        ]
+    ])
+    ->assertJson([
+        'data' => [
+            [
+                'unitUuid' => $unit->uuid,
+                'name' => 'Project name',
+            ]
+        ]
     ]);
 });

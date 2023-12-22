@@ -15,14 +15,11 @@ class UnitMetaResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'unit_uuid' => $this->unitUuid,
+            'unitUuid' => $this->unit_uuid,
             'type' => $this->type,
             'address'  => $this->address,
             'city' => $this->city,
             'postalCode' => $this->postal_code,
-            'startDate' => $this->start_date,
-            'dueDate' => $this->due_date,
-            'completedDate' => $this->completed_date,
             'extra' => $this->extra
         ];
     }

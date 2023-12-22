@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\API\V1\ProjectQuery;
 use App\Filters\API\V1\UnitQuery;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\StoreUnitRequest;
 use App\Http\Requests\API\V1\UpdateUnitRequest;
+use App\Http\Resources\V1\ProjectCollection;
 use App\Http\Resources\V1\UnitCollection;
 use App\Http\Resources\V1\UnitResource;
 use App\Models\Unit;
@@ -56,5 +58,15 @@ class UnitController extends Controller
         $unit->delete();
 
         return response()->json(['message' => 'Unit deleted successfully.']);
+    }
+
+    /**
+     * Get all unit related projects
+     */
+    public function projects(Request $request, Unit $unit): ProjectCollection
+    {
+        $filter = new ProjectQuery();
+        $queryItems = $filter->transform($request);
+        return new ProjectCollection($unit->projects()->where($queryItems)->get());
     }
 }

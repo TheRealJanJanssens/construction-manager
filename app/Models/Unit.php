@@ -25,7 +25,18 @@ class Unit extends Model
         //eerst komende geplande werken
     ];
 
-    public function meta(){
+    public function meta()
+    {
         return $this->hasOne(UnitMeta::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
 }

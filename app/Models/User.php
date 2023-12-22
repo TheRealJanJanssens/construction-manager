@@ -60,15 +60,20 @@ class User extends Authenticatable
         return $this->belongsToMany(Permission::class);
     }
 
+    public function meta(){
+        return $this->hasOne(UserMeta::class);
+    }
+
+    public function units()
+    {
+        return $this->belongsToMany(Unit::class);
+    }
+
     public function setPasswordAttribute($value)
     {
         if (strlen($value) != 60) {
             return $this->attributes['password'] = Hash::make($value);
         }
         return $this->attributes['password'] = $value;
-    }
-
-    public function meta(){
-        return $this->hasOne(UserMeta::class);
     }
 }

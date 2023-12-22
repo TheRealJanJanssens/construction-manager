@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\UnitGroup;
-use App\Models\User;
+use App\Models\Unit;
 use Illuminate\Auth\Access\Response;
 
 class UnitGroupPolicy

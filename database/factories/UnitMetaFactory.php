@@ -22,9 +22,6 @@ class UnitMetaFactory extends Factory
             'address' => fake()->address(),
             'city' => fake()->city(),
             'postal_code' => fake()->postcode(),
-            'start_date' => Carbon::now()->toDateTimeString(),
-            'due_date' => Carbon::now()->addMonths(8)->toDateTimeString(),
-            'completed_date' => null,
             //'extra' => json
         ];
     }
