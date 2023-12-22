@@ -20,7 +20,13 @@ class UnitSeeder extends Seeder
             $users->map(function($user){
                 return $user->uuid;
             })->toArray();
-            \App\Models\Unit::factory()->hasMeta()->belongsToGroup()->create()->users()->attach($users);
+            \App\Models\Unit::factory()
+                ->hasMeta()
+                ->hasAssets(2)
+                ->belongsToGroup()
+                ->create()
+                ->users()
+                ->attach($users);
             //->belongsToGroup($groups->random()->uuid)
         }
 
@@ -30,7 +36,12 @@ class UnitSeeder extends Seeder
             $users->map(function($user){
                 return $user->uuid;
             })->toArray();
-            \App\Models\Unit::factory()->hasMeta()->create()->users()->attach($users);
+            \App\Models\Unit::factory()
+                ->hasMeta()
+                ->hasAssets(2)
+                ->create()
+                ->users()
+                ->attach($users);
         }
     }
 }

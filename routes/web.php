@@ -18,9 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //Get childeren of a phase
     //dd(Phase::all()[0]->children()->get());
+
+    //Get Unit projects
     //dd(Unit::first()->projects()->get());
-    //dd(Project::all()[0]->phases()->get()[0]->project()->get());
+
+    //Get Project phases
+    //dd(Project::all()[0]->phases()->get()[0]->phase()->get());
+
+    //Get assets
+    //dd(Project::all()[0]->assets()->get());
 
     return view('welcome');
 });

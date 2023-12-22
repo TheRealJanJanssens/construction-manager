@@ -15,7 +15,7 @@ class ProjectSeeder extends Seeder
     {
         for ($i = 1; $i <= 8; $i++) {
             $unit = Unit::inRandomOrder()->first();
-            \App\Models\Project::factory()->create([
+            \App\Models\Project::factory()->hasAssets(4)->create([
                 'unit_uuid' => $unit->uuid
             ]);
         }
