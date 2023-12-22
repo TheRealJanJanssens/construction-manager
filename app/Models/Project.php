@@ -26,7 +26,13 @@ class Project extends Model
         'completed_date',
     ];
 
-    public function unit(){
+    public function unit()
+    {
         return $this->belongsTo(Unit::class);
+    }
+
+    public function phases()
+    {
+        return $this->hasMany(ProjectPhase::class);
     }
 }

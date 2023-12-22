@@ -15,6 +15,7 @@ class ProjectResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'uuid' => $this->uuid,
             'unitUuid' => $this->unit_uuid,
             'name' => $this->name,
             'startDate' => $this->start_date,

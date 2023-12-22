@@ -16,7 +16,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,6 +29,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'name' => ['required'],
             'start_date' => ['required'],
+            'unit_uuid' => ['required']
         ];
     }
 }

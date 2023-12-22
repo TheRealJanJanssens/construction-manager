@@ -14,7 +14,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,18 @@ class UpdateProjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        if($this->method == 'PUT'){
+            return [
+                'name' => ['required'],
+                'start_date' => ['required'],
+                'unit_uuid' => ['required']
+            ];
+        }else{
+            return [
+                'name' => ['sometimes','required'],
+                'start_date' => ['sometimes','required'],
+                'unit_uuid' => ['sometimes','required']
+            ];
+        }
     }
 }
