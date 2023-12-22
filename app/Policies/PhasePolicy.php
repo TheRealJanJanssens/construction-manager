@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\UnitGroup;
+use App\Models\Phase;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class UnitGroupPolicy
+class PhasePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class UnitGroupPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, UnitGroup $projectGroup): bool
+    public function view(User $user, Phase $phase): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class UnitGroupPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, UnitGroup $projectGroup): bool
+    public function update(User $user, Phase $phase): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class UnitGroupPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, UnitGroup $projectGroup): bool
+    public function delete(User $user, Phase $phase): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class UnitGroupPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, UnitGroup $projectGroup): bool
+    public function restore(User $user, Phase $phase): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class UnitGroupPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, UnitGroup $projectGroup): bool
+    public function forceDelete(User $user, Phase $phase): bool
     {
         //
     }

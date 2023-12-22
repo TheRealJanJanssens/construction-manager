@@ -16,9 +16,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
+            PhaseSeeder::class,
             UnitGroupSeeder::class,
             UnitSeeder::class,
-            ProjectSeeder::class
+            ProjectSeeder::class,
+            ProjectPhaseSeeder::class
         ]);
     }
 }
