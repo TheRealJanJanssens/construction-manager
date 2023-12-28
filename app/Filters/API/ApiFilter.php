@@ -11,6 +11,7 @@ class ApiFilter{
 
     protected $operatorMap = [
         'eq' => '=',
+        'neq' => '!=',
         'lt' => '<',
         'lte' => '<=',
         'gt' => '>',
