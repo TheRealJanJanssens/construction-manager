@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\API\V1\AssetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\ConversationController;
+use App\Http\Controllers\API\V1\MessageController;
 use App\Http\Controllers\API\V1\ProjectController;
 use App\Http\Controllers\API\V1\UnitController;
 use App\Http\Controllers\API\V1\UserController;
@@ -28,8 +31,14 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\API\V1'], f
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\API\V1', 'middleware' => 'auth:sanctum'], function() {
     Route::apiResource('users', UserController::class);
     Route::apiResource('units', UnitController::class);
+    Route::apiResource('assets', AssetController::class);
     Route::apiResource('projects', ProjectController::class);
+    Route::apiResource('messages', MessageController::class);
+    Route::apiResource('conversations', ConversationController::class);
 
     //Units
     Route::get('units/{unit}/projects', [UnitController::class, 'projects']);
+
+    //Conversations
+    Route::get('conversations/{conversation}/messages', [ConversationController::class, 'messages']);
 });

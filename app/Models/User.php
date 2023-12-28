@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Unit::class);
     }
 
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class);
+    }
+
     public function setPasswordAttribute($value)
     {
         if (strlen($value) != 60) {

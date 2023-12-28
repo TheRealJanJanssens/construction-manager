@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Phase extends Model
+class Conversation extends Model
 {
     use HasFactory, HasUuids, CreateUuid;
 
-    public $timestamps = false;
     protected $primaryKey = 'uuid';
 
     /**
@@ -20,17 +19,21 @@ class Phase extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'parent',
         'name'
     ];
 
-    public function parent()
+    public function users()
     {
-        return $this->belongsTo('App\Models\Phase', 'parent');
+        return $this->belongsToMany(User::class);
     }
 
-    public function children()
+    public function messages()
     {
-        return $this->hasMany('App\Models\Phase', 'parent');
+        return $this->hasMany(Message::class);
+    }
+
+    public function latestMessage()
+    {
+        return $this->hasOne(Message::class)->latest();
     }
 }

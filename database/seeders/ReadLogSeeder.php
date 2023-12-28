@@ -5,15 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UnitGroupSeeder extends Seeder
+class ReadLogSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        \App\Models\UnitGroup::factory(2)
-            ->hasAssets(2)
-            ->create();
+        //
     }
 }

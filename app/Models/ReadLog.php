@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Phase extends Model
+class ReadLog extends Model
 {
     use HasFactory, HasUuids, CreateUuid;
 
-    public $timestamps = false;
     protected $primaryKey = 'uuid';
 
     /**
@@ -20,17 +19,23 @@ class Phase extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'parent',
-        'name'
+        'user_uuid',
+        'readable_uuid',
+        'readable_type',
+        'read_at'
     ];
 
-    public function parent()
+    protected $dates = [
+        'read_at'
+    ];
+
+    public function user()
     {
-        return $this->belongsTo('App\Models\Phase', 'parent');
+        return $this->belongsTo(User::class);
     }
 
-    public function children()
+    public function readable()
     {
-        return $this->hasMany('App\Models\Phase', 'parent');
+        return $this->morphTo();
     }
 }

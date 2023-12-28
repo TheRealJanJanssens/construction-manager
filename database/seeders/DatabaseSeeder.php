@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             UnitGroupSeeder::class,
             UnitSeeder::class,
             ProjectSeeder::class,
-            ProjectPhaseSeeder::class
+            ProjectPhaseSeeder::class,
+            ConversationSeeder::class,
+            MessageSeeder::class
         ]);
     }
 }
