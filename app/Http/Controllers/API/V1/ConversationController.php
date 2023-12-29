@@ -10,6 +10,7 @@ use App\Http\Requests\API\V1\UpdateConversationRequest;
 use App\Http\Resources\V1\ConversationCollection;
 use App\Http\Resources\V1\ConversationResource;
 use App\Http\Resources\V1\MessageCollection;
+use App\Http\Resources\V1\MessageResource;
 use App\Models\Conversation;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -78,5 +79,19 @@ class ConversationController extends Controller
         $filter = new MessageQuery();
         $queryItems = $filter->transform($request);
         return new MessageCollection($conversation->messages()->where($queryItems)->get());
+    }
+
+    /**
+     * Post a new message in a specific conversation with the logged in user as owner
+     */
+    public function addMessage(Request $request, Conversation $conversation): MessageResource
+    {
+        $request->merge([
+            'user_uuid' => auth()->id(),
+            'conversation_uuid' => $conversation->uuid
+        ]);
+
+        $message = Message::create($request->all());
+        return new MessageResource($message);
     }
 }

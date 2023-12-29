@@ -178,3 +178,29 @@ it('can retrieve all messages from a conversation ',function (){
         ]
     ]);
 });
+
+it('can add a new message to a conversation ',function (){
+    $conversation  = Conversation::factory()->create();
+
+    $data = [
+        "content" => "test message"
+    ];
+
+    $response = $this->postJson("/api/v1/conversations/".$conversation->uuid."/messages", $data);
+
+    $response->assertStatus(201)->assertJson([
+        'data' => [
+            "conversationUuid" => $conversation->uuid,
+            "content" => "test message"
+        ]
+    ])->assertJsonStructure([
+        'data' => [
+            'uuid',
+            'conversationUuid',
+            'userUuid',
+            'content',
+            'createdAt',
+            'updatedAt'
+        ]
+    ]);
+});

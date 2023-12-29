@@ -36,9 +36,15 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\API\V1', 'm
     Route::apiResource('messages', MessageController::class);
     Route::apiResource('conversations', ConversationController::class);
 
+    //Users
+    Route::get('users/{user}/units', [UserController::class, 'units']);
+    Route::get('users/{user}/conversations', [UserController::class, 'conversations']);
+
     //Units
+    Route::get('units/{unit}/users', [UnitController::class, 'users']);
     Route::get('units/{unit}/projects', [UnitController::class, 'projects']);
 
     //Conversations
     Route::get('conversations/{conversation}/messages', [ConversationController::class, 'messages']);
+    Route::post('conversations/{conversation}/messages', [ConversationController::class, 'addMessage']);
 });

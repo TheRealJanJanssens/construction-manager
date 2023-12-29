@@ -5,6 +5,7 @@ use App\Enums\Status;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
@@ -182,5 +183,33 @@ it('can\'t update a user with a patch request when invalid data is given', funct
     $response = $this->patchJson('/api/v1/users/'.$user->uuid, $data);
     $response->assertStatus(422)->assertJson([
         'message' => "The email field must be a valid email address.",
+    ]);
+});
+
+it('can fetch a list of units related to the user', function () {
+    $user = User::create([
+        'first_name' => 'Jan',
+        'last_name' => 'Janssens',
+        'email' => 'tester@digiti.be',
+        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+    ]);
+
+    Unit::factory()
+        ->hasMeta()
+        ->create()
+        ->users()
+        ->sync([$user->uuid]);
+
+    $response = $this->get("/api/v1/users/".$user->uuid."/units");
+
+    $response->assertStatus(200)->assertJsonStructure([
+        'data' => [
+            [
+                'uuid',
+                'groupUuid',
+                'name',
+                'meta'
+            ]
+        ]
     ]);
 });

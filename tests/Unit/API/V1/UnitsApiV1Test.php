@@ -215,3 +215,32 @@ it('can fetch all projects of a specific unit', function () {
         ]
     ]);
 });
+
+it('can fetch all users of a specific unit', function () {
+    $users = User::factory(2)->create()->map(function($user){
+        return $user->uuid;
+    })->toArray();
+
+    $unit = Unit::factory()
+        ->hasMeta()
+        ->create();
+
+    //Link users
+    $unit->users()
+        ->sync($users);
+
+    $response = $this->get("/api/v1/units/".$unit->uuid."/users");
+
+    $response->assertStatus(200)
+    ->assertJsonStructure([
+        'data' => [
+            [
+                'uuid',
+                'firstName',
+                'lastName',
+                'email',
+                'meta'
+            ]
+        ]
+    ]);
+});

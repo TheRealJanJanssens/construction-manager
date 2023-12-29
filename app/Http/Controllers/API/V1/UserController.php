@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\API\V1\ConversationQuery;
 use App\Filters\API\V1\MessageQuery;
+use App\Filters\API\V1\UnitQuery;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -13,7 +15,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\StoreUserRequest;
 use App\Http\Requests\API\V1\UpdateUserRequest;
+use App\Http\Resources\V1\ConversationCollection;
 use App\Http\Resources\V1\MessageCollection;
+use App\Http\Resources\V1\UnitCollection;
 use App\Models\Message;
 
 /**
@@ -62,5 +66,25 @@ class UserController extends Controller
     {
         $user->update($request->all());
         return new UserResource($user);
+    }
+
+    /**
+     * Get all conversations linked to a user
+     */
+    public function conversations(Request $request, User $user): ConversationCollection
+    {
+        $filter = new ConversationQuery();
+        $queryItems = $filter->transform($request);
+        return new ConversationCollection($user->conversations()->where($queryItems)->get());
+    }
+
+    /**
+     * Get all conversations linked to a user
+     */
+    public function units(Request $request, User $user): UnitCollection
+    {
+        $filter = new UnitQuery();
+        $queryItems = $filter->transform($request);
+        return new UnitCollection($user->units()->where($queryItems)->with(['meta'])->get());
     }
 }

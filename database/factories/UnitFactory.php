@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Unit;
 use App\Models\UnitGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

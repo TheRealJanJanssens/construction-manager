@@ -4,12 +4,14 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Filters\API\V1\ProjectQuery;
 use App\Filters\API\V1\UnitQuery;
+use App\Filters\API\V1\UserQuery;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\StoreUnitRequest;
 use App\Http\Requests\API\V1\UpdateUnitRequest;
 use App\Http\Resources\V1\ProjectCollection;
 use App\Http\Resources\V1\UnitCollection;
 use App\Http\Resources\V1\UnitResource;
+use App\Http\Resources\V1\UserCollection;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -68,5 +70,15 @@ class UnitController extends Controller
         $filter = new ProjectQuery();
         $queryItems = $filter->transform($request);
         return new ProjectCollection($unit->projects()->where($queryItems)->get());
+    }
+
+    /**
+     * Get all unit related users
+     */
+    public function users(Request $request, Unit $unit): UserCollection
+    {
+        $filter = new UserQuery();
+        $queryItems = $filter->transform($request);
+        return new UserCollection($unit->users()->where($queryItems)->with(['meta'])->get());
     }
 }
