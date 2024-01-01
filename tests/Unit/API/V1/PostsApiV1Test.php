@@ -188,7 +188,6 @@ it('can add a new comment to a post',function (){
     $post = Post::factory()->belongsToProject()->belongsToUser()->create();
 
     $data = [
-        "post_uuid" => $post->uuid,
         "content" => "test comment"
     ];
 

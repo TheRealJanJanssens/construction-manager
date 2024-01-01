@@ -77,7 +77,7 @@ class PostController extends Controller
     {
         $request->merge([
             'user_uuid' => auth()->id(),
-            'post' => $post->uuid
+            'post_uuid' => $post->uuid
         ]);
 
         $comment = Comment::create($request->all());
