@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProjectPhase;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +14,7 @@ class ProjectPhaseSeeder extends Seeder
     public function run(): void
     {
         for ($i = 1; $i <= 90; $i++) {
-            \App\Models\ProjectPhase::factory()->belongsToPhase()->belongsToProject()->create();
+            ProjectPhase::factory()->belongsToPhase()->belongsToProject()->create();
         }
     }
 }

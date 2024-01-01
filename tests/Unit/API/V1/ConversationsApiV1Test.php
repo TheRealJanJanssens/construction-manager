@@ -104,7 +104,7 @@ it('can\'t update a conversation with a put request when invalid data is given',
 
     $data = [
         'name' => "Conversation 2",
-        'users' => []
+        'users' => ["fake-uuid"]
     ];
 
     $response = $this->patchJson('/api/v1/conversations/'.$conversation->uuid, $data);
@@ -134,7 +134,7 @@ it('can\'t update a conversation with a patch request when invalid data is given
 
     $data = [
         'name' => "Conversation 2",
-        'users' => []
+        'users' => ["fake-uuid"]
     ];
 
     $response = $this->patchJson('/api/v1/conversations/'.$conversation->uuid, $data);

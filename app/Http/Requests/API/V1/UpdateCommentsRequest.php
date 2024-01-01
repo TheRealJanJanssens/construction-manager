@@ -5,7 +5,7 @@ namespace App\Http\Requests\API\V1;
 use App\Traits\API\V1\PrepareForValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateConversationRequest extends FormRequest
+class UpdateCommentsRequest extends FormRequest
 {
     use PrepareForValidation;
 
@@ -26,13 +26,15 @@ class UpdateConversationRequest extends FormRequest
     {
         if($this->method == 'PUT'){
             return [
-                'name' => ['required'],
-                'users' => ['required', 'array', 'min:2']
+                'post_uuid' => ['required'],
+                'user_uuid' => ['required'],
+                'content' => ['required']
             ];
         }else{
             return [
-                'name' => ['sometimes', 'required'],
-                'users' => ['sometimes', 'required', 'array', 'min:2']
+                'post_uuid' => ['sometimes','required'],
+                'user_uuid' => ['sometimes','required'],
+                'content' => ['sometimes','required']
             ];
         }
     }

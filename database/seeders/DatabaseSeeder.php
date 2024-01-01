@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +21,9 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             ProjectPhaseSeeder::class,
             ConversationSeeder::class,
-            MessageSeeder::class
+            MessageSeeder::class,
+            PostSeeder::class,
+            CommentsSeeder::class
         ]);
     }
 }

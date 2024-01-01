@@ -5,9 +5,11 @@ namespace App\Http\Requests\API\V1;
 use App\Traits\API\V1\PrepareForValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateConversationRequest extends FormRequest
+class StorePostRequest extends FormRequest
 {
-    use PrepareForValidation;
+    use PrepareForValidation{
+        PrepareForValidation::prepareForValidation as parentPrepareForValidation;
+    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +26,10 @@ class UpdateConversationRequest extends FormRequest
      */
     public function rules(): array
     {
-        if($this->method == 'PUT'){
-            return [
-                'name' => ['required'],
-                'users' => ['required', 'array', 'min:2']
-            ];
-        }else{
-            return [
-                'name' => ['sometimes', 'required'],
-                'users' => ['sometimes', 'required', 'array', 'min:2']
-            ];
-        }
+        return [
+            'project_uuid' => ['required'],
+            'user_uuid' => ['required'],
+            'content' => ['required']
+        ];
     }
 }

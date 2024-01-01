@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,5 +24,18 @@ class ProjectFactory extends Factory
             'due_date' => Carbon::now()->addMonths(8)->toDateTimeString(),
             'completed_date' => null,
         ];
+    }
+
+    public function belongsToUnit($uuid = false) {
+        if (!$uuid) {
+            $unit = Unit::inRandomOrder()->first();
+            $uuid = $unit->uuid;
+        }
+
+        return $this->state(function (array $attributes) use ($uuid) {
+            return [
+                'unit_uuid' => $uuid,
+            ];
+        });
     }
 }

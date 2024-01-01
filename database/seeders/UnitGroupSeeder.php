@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\UnitGroup;
 
 class UnitGroupSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class UnitGroupSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\UnitGroup::factory(2)
+        UnitGroup::factory(2)
             ->hasAssets(2)
             ->create();
     }
